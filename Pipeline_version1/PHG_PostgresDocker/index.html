@@ -1,0 +1,1909 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../PHG_Liquibase/">
+      
+      
+        <link rel="next" href="../ParallelAssemblyAnchorsLoad/">
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.13">
+    
+    
+      
+        <title>PHG PostgresDocker - Practical Haplotype Graph Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.85bb2934.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#why-postgresql" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Practical Haplotype Graph Documentation" class="md-header__button md-logo" aria-label="Practical Haplotype Graph Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Practical Haplotype Graph Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              PHG PostgresDocker
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Practical Haplotype Graph Documentation" class="md-nav__button md-logo" aria-label="Practical Haplotype Graph Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Practical Haplotype Graph Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Home_variantTables/" class="md-nav__link">
+        How to use the PHG
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Home_variantsInGVCFFiles/" class="md-nav__link">
+        How to use the PHG
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Home_version1/" class="md-nav__link">
+        Home version1
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../PHG_GUI/" class="md-nav__link">
+        Documentation for Genotyping using the PHG within TASSEL GUI
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+          PHG 
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          PHG 
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../PHG%20/%20BrAPI%20Server%20on%20CBSU/" class="md-nav__link">
+         BrAPI Server on CBSU
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+          Pipeline version1
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
+        <label class="md-nav__title" for="__nav_7">
+          <span class="md-nav__icon md-icon"></span>
+          Pipeline version1
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AssemblyHaplotypesPlugin/" class="md-nav__link">
+        AssemblyHaplotypesPlugin
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ConfigFile/" class="md-nav__link">
+        ConfigFile Documentation #
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CreateAssemblyAnchorsPlugin/" class="md-nav__link">
+        CreateAssemblyAnchorsPlugin
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CreateConsensi/" class="md-nav__link">
+        CreateConsensi
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CreateHaplotypeKeyFile/" class="md-nav__link">
+        CreateHaplotype Key File
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CreateHaplotypes/" class="md-nav__link">
+        Create Haplotypes
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CreateHaplotypesFromBAM/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CreateHaplotypesFromFastq/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CreateHaplotypesFromGVCF/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CreateReferenceIntervals/" class="md-nav__link">
+        CreateReferenceIntervals
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ExportPath/" class="md-nav__link">
+        ExportPath
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FastqToHapCountPlugin/" class="md-nav__link">
+        FastqToHapCountPlugin
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FilterGVCFPlugin/" class="md-nav__link">
+        FilterGVCFPlugin
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FindHaplotypeClustersPlugin/" class="md-nav__link">
+        FindHaplotypeClustersPlugin
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FindPath/" class="md-nav__link">
+        FindPath
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FindPathKeyFiles/" class="md-nav__link">
+        Find Path Key Files
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FindPathMinimap2/" class="md-nav__link">
+        Overview #
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../HapCountBestPathToTextPlugin/" class="md-nav__link">
+        HapCountBestPathToTextPlugin
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ImportHaplotypePathFilePlugin/" class="md-nav__link">
+        ImportHaplotypePathFilePlugin
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ImportReadMappingToDBPlugin/" class="md-nav__link">
+        ImportReadMappingToDBPlugin
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IndexPangenome/" class="md-nav__link">
+        Overview #
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../LoadAssemblyAnchors/" class="md-nav__link">
+        LoadAssemblyAnchors
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../LoadConsensusAnchorSequencesPlugin/" class="md-nav__link">
+        LoadConsensusAnchorSequencesPlugin
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../LoadGenomeIntervals/" class="md-nav__link">
+        LoadGenomeIntervals
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../LoadGenomeIntervalsToDBPlugin/" class="md-nav__link">
+        LoadGenomeIntervalsToDBPlugin
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../LoadHapSequencesToDBPlugin/" class="md-nav__link">
+        LoadHapSequencesToDBPlugin
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MergeGVCFPlugin/" class="md-nav__link">
+        MergeGVCFPlugin
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Minimap2NoDocker/" class="md-nav__link">
+        Minimap2NoDocker
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../PHG_Liquibase/" class="md-nav__link">
+        PHG Liquibase
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          PHG PostgresDocker
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        PHG PostgresDocker
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-postgresql" class="md-nav__link">
+    Why PostgreSQL?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-postgresql-in-a-docker" class="md-nav__link">
+    Why PostgreSQL in a docker?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creating-the-phg-postgresql-docker-image" class="md-nav__link">
+    Creating the PHG PostgreSQL docker image
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#connecting-to-a-phg-postgresql-docker-image" class="md-nav__link">
+    Connecting to a PHG PostgreSQL docker image
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rules-of-thumb-for-connecting-to-the-postgresql-docker-image-for-phg" class="md-nav__link">
+    Rules of Thumb for Connecting to the PostgreSQL docker image for PHG
+  </a>
+  
+    <nav class="md-nav" aria-label="Rules of Thumb for Connecting to the PostgreSQL docker image for PHG">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#connecting-from-an-external-machine" class="md-nav__link">
+    Connecting from an external machine:
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#connecting-from-a-phg-docker-script-on-the-same-host" class="md-nav__link">
+    Connecting from a PHG docker script on the same host:
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#connecting-from-a-non-docker-program-on-the-same-host" class="md-nav__link">
+    Connecting from a non-docker program on the same host:
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#connecting-docker-docker-on-a-cornell-cbsu-machine-both-dockers-on-the-same-machine" class="md-nav__link">
+    Connecting docker-docker on a Cornell CBSU machine (both dockers on the same machine):
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ParallelAssemblyAnchorsLoad/" class="md-nav__link">
+        ParallelAssemblyAnchorsLoad
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../PathsToVCFPlugin/" class="md-nav__link">
+        PathsToVCFPlugin
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RunHapCollapsePlugin/" class="md-nav__link">
+        RunHapCollapsePlugin
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SAMToMappingPlugin/" class="md-nav__link">
+        SAMToMappingPlugin
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../help_biostars/" class="md-nav__link">
+        How to ask questions about the PHG
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_36" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7_36" id="__nav_7_36_label" tabindex="0">
+          DeprecatedScripts
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_36_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_7_36">
+          <span class="md-nav__icon md-icon"></span>
+          DeprecatedScripts
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DeprecatedScripts/CreateHaplotypes_sh/" class="md-nav__link">
+        THIS SCRIPT IS DEPRECATED
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+          UserInstructions
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_8">
+          <span class="md-nav__icon md-icon"></span>
+          UserInstructions
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/CreatePHG_step0_conda/" class="md-nav__link">
+        Use Conda to run PHG
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/CreatePHG_step0_docker/" class="md-nav__link">
+        Use Docker to run PHG
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/CreatePHG_step0_main/" class="md-nav__link">
+        CreatePHG step0 main
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/CreatePHG_step0_singularity/" class="md-nav__link">
+        Use Singularity to run PHG
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/CreatePHG_step1-2_main/" class="md-nav__link">
+        Create and Populate a PHG database with haplotypes
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/CreatePHG_step1CreateDB_loadRef/" class="md-nav__link">
+        Create and Populate a PHG database with haplotypes
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/CreatePHG_step1_bedfile/" class="md-nav__link">
+        Create bedfile of intervals for PHG reference ranges
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/CreatePHG_step1_groupGenomeIntervals/" class="md-nav__link">
+        Separate genome intervals into different groups
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/CreatePHG_step1_loadGenomeIntervals/" class="md-nav__link">
+        Load genome intervals to PHG
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/CreatePHG_step2AssemblyAndWGSHaplotypes/" class="md-nav__link">
+        Step 2: Add haplotypes to a database
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/CreatePHG_step2_FilterGVCFPlugin/" class="md-nav__link">
+        Filter GVCF Plugin
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/CreatePHG_step2_FilterGVCFSingleFilePlugin/" class="md-nav__link">
+        FilterGVCFSingleFilePlugin
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/CreatePHG_step2_LoadHaplotypesFromGVCFPluginDetails/" class="md-nav__link">
+        LoadHaplotypesFromGVCFPlugin Details
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/CreatePHG_step2_MAFToGVCFPluginDetails/" class="md-nav__link">
+        MAFToGVCFPlugin Details
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/CreatePHG_step2_addHaplotypesFromWGS/" class="md-nav__link">
+        Quick Start
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/CreatePHG_step2_addHapsFromBAM/" class="md-nav__link">
+        Separate genome intervals into groups
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/CreatePHG_step2_addHapsFromFastq/" class="md-nav__link">
+        Align WGS fastq files to reference genome
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/CreatePHG_step2_addHapsFromGVCF/" class="md-nav__link">
+        Filter GVCF and add variants to database
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/CreatePHG_step2_alignAssemblies/" class="md-nav__link">
+        Align assemblies to reference genome
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/CreatePHG_step2_assemblyAnchorWavePluginDetails/" class="md-nav__link">
+        AssemblyMAFFromAnchorWavePlugin Details
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/CreatePHG_step2_assemblyHaplotypeParameters/" class="md-nav__link">
+        Quick Start
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/CreatePHG_step2_assemblyViaAnchorwave/" class="md-nav__link">
+        Quick Start
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/CreatePHG_step2_consensus/" class="md-nav__link">
+        Create consensus haplotypes
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/CreatePHG_step2_haplotypeKeyfile/" class="md-nav__link">
+        CreateHaplotype Key File
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/CreatePHG_step2_taxaGroupTables/" class="md-nav__link">
+        Separate taxa  into different groups
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/ExampleDatabase/" class="md-nav__link">
+        Creating a Simple Example Database
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/FindLikelyParents/" class="md-nav__link">
+        Finding Likely Parents for Imputation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/HaplotypeMethod/" class="md-nav__link">
+        Haplotype Methods
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/ImputePHG_Simple/" class="md-nav__link">
+        I have a fastq file - I want a PHG path
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/ImputeWithPHG_VCF/" class="md-nav__link">
+        Impute variants from a VCF file
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/ImputeWithPHG_compare/" class="md-nav__link">
+        Compare PHG variants to existing variants
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/ImputeWithPHG_exportVCF/" class="md-nav__link">
+        Export variants as VCF
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/ImputeWithPHG_extractPangenome/" class="md-nav__link">
+        Extract a pangenome fasta file
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/ImputeWithPHG_fastq-heterozygous/" class="md-nav__link">
+        Impute variants from any fastq file
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/ImputeWithPHG_fastq-homozygous/" class="md-nav__link">
+        Impute variants from any fastq file - process for homozygous individuals
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/ImputeWithPHG_findPathKeyFiles/" class="md-nav__link">
+        Find Path Key Files
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/ImputeWithPHG_main/" class="md-nav__link">
+        ImputeWithPHG main
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/ImputeWithPHG_paramTuning/" class="md-nav__link">
+        Tune pathfinding parameters
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/MakeDefaultDirectory/" class="md-nav__link">
+        Make Default Directory Plugin
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/MakeInitialPHGDBPipeline/" class="md-nav__link">
+        Make Initial PHG DB Pipeline Plugin
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/MergeFastqPluginDetailedDocs/" class="md-nav__link">
+        MergeFastqPlugin Detailed Documentation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/MultisampleBAMPipeline/" class="md-nav__link">
+        Step 3a: Create ReadMappings using the MultisampleBAM Pipeline
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/PopulatePHGDBPipeline/" class="md-nav__link">
+        Populate PHG DB Pipeline Plugin
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/SampleHaplotypeConfigFile/" class="md-nav__link">
+        Sample Config file for Loading Haplotypes.
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/UpdatePHGSchema/" class="md-nav__link">
+        Update an existing PHG database to latest schema with liquibase
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/help_biostars/" class="md-nav__link">
+        How to ask questions about the PHG
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-postgresql" class="md-nav__link">
+    Why PostgreSQL?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-postgresql-in-a-docker" class="md-nav__link">
+    Why PostgreSQL in a docker?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creating-the-phg-postgresql-docker-image" class="md-nav__link">
+    Creating the PHG PostgreSQL docker image
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#connecting-to-a-phg-postgresql-docker-image" class="md-nav__link">
+    Connecting to a PHG PostgreSQL docker image
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rules-of-thumb-for-connecting-to-the-postgresql-docker-image-for-phg" class="md-nav__link">
+    Rules of Thumb for Connecting to the PostgreSQL docker image for PHG
+  </a>
+  
+    <nav class="md-nav" aria-label="Rules of Thumb for Connecting to the PostgreSQL docker image for PHG">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#connecting-from-an-external-machine" class="md-nav__link">
+    Connecting from an external machine:
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#connecting-from-a-phg-docker-script-on-the-same-host" class="md-nav__link">
+    Connecting from a PHG docker script on the same host:
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#connecting-from-a-non-docker-program-on-the-same-host" class="md-nav__link">
+    Connecting from a non-docker program on the same host:
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#connecting-docker-docker-on-a-cornell-cbsu-machine-both-dockers-on-the-same-machine" class="md-nav__link">
+    Connecting docker-docker on a Cornell CBSU machine (both dockers on the same machine):
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  <h1>PHG PostgresDocker</h1>
+
+<h2 id="why-postgresql"><em>Why PostgreSQL?</em></h2>
+<p>PostgreSQL is an industry standard object-relational database system providing reliability and data integrity.  It provides good performance, supports many concurrent users, and allows for user extensions.</p>
+<h2 id="why-postgresql-in-a-docker"><em>Why PostgreSQL in a docker?</em></h2>
+<p>Providing a containerized version of PostgreSQL removes the need for the user to intall and maintain their own postgres image.  The database file created and manipulated in the postgres docker can be persisted to a shared volume for processing by multiple applications.</p>
+<p>Having postgres in a docker also ensures the PHG pipeline interacts with a known version of PostgreSQL.</p>
+<h2 id="creating-the-phg-postgresql-docker-image"><em>Creating the PHG PostgreSQL docker image</em></h2>
+<p>The postgres docker image may be downloaded from docker hub via the following command.  Replace <version> with the postgres version you wish to run.</p>
+<pre><code>#!python
+
+ &gt; docker pull postgres:&lt;version&gt;
+</code></pre>
+<p>If running on a Cornell CBSU machine, replace "docker" with "docker1".</p>
+<p>If phg_postgres docker has already been installed and you wish to upgrade, stop and remove any containers associated with the image.  Then remove the existing image using the docker "rmi" command.</p>
+<h2 id="connecting-to-a-phg-postgresql-docker-image"><em>Connecting to a PHG PostgreSQL docker image</em></h2>
+<p>Connecting to a PHG postgres docker image requires two files:</p>
+<ol>
+<li>a parameters file</li>
+<li>a container commands file.</li>
+</ol>
+<p>The container commands file reads a user supplied parameters file, then creates a container against the postgres docker image using sourced parameters.  The container is created in detached mode, which allows for "docker exec" commands to be run against it.</p>
+<p>Here is an example of a container commands file (container_cmdsPostgres.sh):</p>
+<pre><code>#!python
+
+#!/usr/bin/env bash
+set -u
+set -e
+set -x
+
+# read in parameters
+source $1
+
+# run the docker in detach mode
+docker run -i --detach --name $DOCKER_CONTAINER_NAME -e POSTGRES_PASSWORD=$POSTGRES_PASSWORD -v $POSTGRES_DATA_MOUNT:/var/lib/postgresql/data -p $DOCKER_DB_PORT:5432 $DOCKER_IMAGE_NAME
+
+# start the docker
+docker start $DOCKER_CONTAINER_NAME
+
+# PHG scripts may now be run using the postgres db with the host ip address and DOCKER_DB_PORT assigned above
+</code></pre>
+<p>A sample parameters file, with a description of each parameter, is below.  Among other parameters, the defining of   a value for the postgres password helps ensure the security of your data.  Note where each parameter below is used in the container commands file above:</p>
+<pre><code>#!python
+
+# This file provides parameters for the container_cmdsPostgresDocker.sh file.
+# Edit this file to reflect your configuration
+
+# Port that is mapped to the docker postgres 5432 port.  If running on a Cornell CBSU machine,
+# the mapped port must be between 8009-8019.  Those are the only exposed ports.
+DOCKER_DB_PORT=&quot;5433&quot;
+
+# Name for the docker container running against the postgres image
+CONTAINER_NAME=&quot;phg_postgres_container&quot;
+
+# When running on Cornell CBSU machines, a prefix is appended to any docker container created.
+# This prefix consists of the user id followed by &quot;__biohpc_&quot;, e.g. &quot;lcj34__biohpc-&quot;
+# This prefix can remain blank if not running on Cornell CBSU machine
+CONTAINER_PREFIX=&quot;&quot;
+DOCKER_CONTAINER_NAME=${CONTAINER_PREFIX}${CONTAINER_NAME}
+
+# Name of the docker image against which your container will be run
+DOCKER_IMAGE_NAME=&quot;postgres:11&quot;
+
+# password for postgres db user.  It is recommended this be changed from the default &quot;postgres&quot;
+# The  POSTGRES_PASSWORD must remain consistent when attaching to the same persisted database
+# This password should appear in the config file used with other PHG scripts for loading data
+# to the phg database.
+POSTGRES_PASSWORD=&quot;yoursecretpassword&quot;
+
+# Place to mount the data.  Data will be mapped to internal postgres /var/lib/postgresql/data directory
+# This data will persist to the volume specified in POSTGRES_DATA_MOUNT.
+POSTGRES_DATA_MOUNT=&quot;/Users/lcj34/postgres_docker/test_postgres_data/data&quot;
+</code></pre>
+<p>To setup the postgres docker execute the container commands files (container_cmdsPostgres.sh above) from the command line.  The db is now ready for connections.  To connect to this postgres instance from the PHG pipeline follow the rules below for defining the host/port in the config file.</p>
+<h2 id="rules-of-thumb-for-connecting-to-the-postgresql-docker-image-for-phg"><em>Rules of Thumb for Connecting to the PostgreSQL docker image for PHG</em></h2>
+<p>In all cases you must ensure the user name/password you used when creating the database initially remains the same across all containers that connect to the PHG postgres docker image, and in all config files used by scripts that access the database.  </p>
+<h3 id="connecting-from-an-external-machine">Connecting from an external machine:</h3>
+<ul>
+<li>your config file must have the internet address of the host where the docker container resides</li>
+<li>the port must be the mapped port (value of $DOCKER_DB_PORT) from the "docker run --detach ... command" (see -p = $DOCKER_DB_PORT:5432 in the container and parameters files above)</li>
+<li>example:  If the remote machine's ip address is 128.32.5.269 with a mapped port of 5433, the config file would have a host line of "host=128.32.5.269:5433"</li>
+</ul>
+<h3 id="connecting-from-a-phg-docker-script-on-the-same-host">Connecting from a PHG docker script on the same host:</h3>
+<ul>
+<li>your config file should have host ip addr of 0.0.0.0:<db_mapped_port></li>
+<li>if your machine is using a Docker virtual network, the port would instead be the regular postgres port of 5432</li>
+<li>CAVEAT:  This does not always work.  If you are having problems, try using the external machine address, ie host=128.32.5.269:5433 (replacing the IP address and mapped port with your machine's address and mapped port).</li>
+</ul>
+<h3 id="connecting-from-a-non-docker-program-on-the-same-host">Connecting from a non-docker program on the same host:</h3>
+<ul>
+<li>your config file should have host ip addr of 0.0.0.0:<db_mapped_port></li>
+</ul>
+<h3 id="connecting-docker-docker-on-a-cornell-cbsu-machine-both-dockers-on-the-same-machine">Connecting docker-docker on a Cornell CBSU machine (both dockers on the same machine):</h3>
+<ul>
+<li>your config file should have host ip addr of 0.0.0.0:5432</li>
+<li>If the above doesn't work, use the full external address with mapped port.  This takes you out and back in the network which shouldn't be required, but it works if nothing else does.</li>
+<li>When a postgres docker run has finished creating and loading a new db, "root" will own all the directories.  In order to run subsequent scripts that mount to this data directory you must "claim" and change permissions on your postgres data directory as below:</li>
+</ul>
+<pre><code>#!python
+
+&gt; docker1 claim
+&gt; chmod -R 777 data  
+</code></pre>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.b4d07000.min.js"></script>
+      
+    
+  </body>
+</html>

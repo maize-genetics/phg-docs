@@ -1,0 +1,1740 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../PHG_PostgresDocker/">
+      
+      
+        <link rel="next" href="../PathsToVCFPlugin/">
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.13">
+    
+    
+      
+        <title>ParallelAssemblyAnchorsLoad - Practical Haplotype Graph Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.85bb2934.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Practical Haplotype Graph Documentation" class="md-header__button md-logo" aria-label="Practical Haplotype Graph Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Practical Haplotype Graph Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              ParallelAssemblyAnchorsLoad
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Practical Haplotype Graph Documentation" class="md-nav__button md-logo" aria-label="Practical Haplotype Graph Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Practical Haplotype Graph Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Home_variantTables/" class="md-nav__link">
+        How to use the PHG
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Home_variantsInGVCFFiles/" class="md-nav__link">
+        How to use the PHG
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Home_version1/" class="md-nav__link">
+        Home version1
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../PHG_GUI/" class="md-nav__link">
+        Documentation for Genotyping using the PHG within TASSEL GUI
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+          PHG 
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          PHG 
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../PHG%20/%20BrAPI%20Server%20on%20CBSU/" class="md-nav__link">
+         BrAPI Server on CBSU
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+          Pipeline version1
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
+        <label class="md-nav__title" for="__nav_7">
+          <span class="md-nav__icon md-icon"></span>
+          Pipeline version1
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AssemblyHaplotypesPlugin/" class="md-nav__link">
+        AssemblyHaplotypesPlugin
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ConfigFile/" class="md-nav__link">
+        ConfigFile Documentation #
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CreateAssemblyAnchorsPlugin/" class="md-nav__link">
+        CreateAssemblyAnchorsPlugin
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CreateConsensi/" class="md-nav__link">
+        CreateConsensi
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CreateHaplotypeKeyFile/" class="md-nav__link">
+        CreateHaplotype Key File
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CreateHaplotypes/" class="md-nav__link">
+        Create Haplotypes
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CreateHaplotypesFromBAM/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CreateHaplotypesFromFastq/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CreateHaplotypesFromGVCF/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CreateReferenceIntervals/" class="md-nav__link">
+        CreateReferenceIntervals
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ExportPath/" class="md-nav__link">
+        ExportPath
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FastqToHapCountPlugin/" class="md-nav__link">
+        FastqToHapCountPlugin
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FilterGVCFPlugin/" class="md-nav__link">
+        FilterGVCFPlugin
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FindHaplotypeClustersPlugin/" class="md-nav__link">
+        FindHaplotypeClustersPlugin
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FindPath/" class="md-nav__link">
+        FindPath
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FindPathKeyFiles/" class="md-nav__link">
+        Find Path Key Files
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FindPathMinimap2/" class="md-nav__link">
+        Overview #
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../HapCountBestPathToTextPlugin/" class="md-nav__link">
+        HapCountBestPathToTextPlugin
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ImportHaplotypePathFilePlugin/" class="md-nav__link">
+        ImportHaplotypePathFilePlugin
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ImportReadMappingToDBPlugin/" class="md-nav__link">
+        ImportReadMappingToDBPlugin
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IndexPangenome/" class="md-nav__link">
+        Overview #
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../LoadAssemblyAnchors/" class="md-nav__link">
+        LoadAssemblyAnchors
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../LoadConsensusAnchorSequencesPlugin/" class="md-nav__link">
+        LoadConsensusAnchorSequencesPlugin
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../LoadGenomeIntervals/" class="md-nav__link">
+        LoadGenomeIntervals
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../LoadGenomeIntervalsToDBPlugin/" class="md-nav__link">
+        LoadGenomeIntervalsToDBPlugin
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../LoadHapSequencesToDBPlugin/" class="md-nav__link">
+        LoadHapSequencesToDBPlugin
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MergeGVCFPlugin/" class="md-nav__link">
+        MergeGVCFPlugin
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Minimap2NoDocker/" class="md-nav__link">
+        Minimap2NoDocker
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../PHG_Liquibase/" class="md-nav__link">
+        PHG Liquibase
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../PHG_PostgresDocker/" class="md-nav__link">
+        PHG PostgresDocker
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        ParallelAssemblyAnchorsLoad
+      </a>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../PathsToVCFPlugin/" class="md-nav__link">
+        PathsToVCFPlugin
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RunHapCollapsePlugin/" class="md-nav__link">
+        RunHapCollapsePlugin
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SAMToMappingPlugin/" class="md-nav__link">
+        SAMToMappingPlugin
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../help_biostars/" class="md-nav__link">
+        How to ask questions about the PHG
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_36" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7_36" id="__nav_7_36_label" tabindex="0">
+          DeprecatedScripts
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_36_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_7_36">
+          <span class="md-nav__icon md-icon"></span>
+          DeprecatedScripts
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DeprecatedScripts/CreateHaplotypes_sh/" class="md-nav__link">
+        THIS SCRIPT IS DEPRECATED
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+          UserInstructions
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_8">
+          <span class="md-nav__icon md-icon"></span>
+          UserInstructions
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/CreatePHG_step0_conda/" class="md-nav__link">
+        Use Conda to run PHG
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/CreatePHG_step0_docker/" class="md-nav__link">
+        Use Docker to run PHG
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/CreatePHG_step0_main/" class="md-nav__link">
+        CreatePHG step0 main
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/CreatePHG_step0_singularity/" class="md-nav__link">
+        Use Singularity to run PHG
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/CreatePHG_step1-2_main/" class="md-nav__link">
+        Create and Populate a PHG database with haplotypes
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/CreatePHG_step1CreateDB_loadRef/" class="md-nav__link">
+        Create and Populate a PHG database with haplotypes
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/CreatePHG_step1_bedfile/" class="md-nav__link">
+        Create bedfile of intervals for PHG reference ranges
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/CreatePHG_step1_groupGenomeIntervals/" class="md-nav__link">
+        Separate genome intervals into different groups
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/CreatePHG_step1_loadGenomeIntervals/" class="md-nav__link">
+        Load genome intervals to PHG
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/CreatePHG_step2AssemblyAndWGSHaplotypes/" class="md-nav__link">
+        Step 2: Add haplotypes to a database
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/CreatePHG_step2_FilterGVCFPlugin/" class="md-nav__link">
+        Filter GVCF Plugin
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/CreatePHG_step2_FilterGVCFSingleFilePlugin/" class="md-nav__link">
+        FilterGVCFSingleFilePlugin
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/CreatePHG_step2_LoadHaplotypesFromGVCFPluginDetails/" class="md-nav__link">
+        LoadHaplotypesFromGVCFPlugin Details
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/CreatePHG_step2_MAFToGVCFPluginDetails/" class="md-nav__link">
+        MAFToGVCFPlugin Details
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/CreatePHG_step2_addHaplotypesFromWGS/" class="md-nav__link">
+        Quick Start
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/CreatePHG_step2_addHapsFromBAM/" class="md-nav__link">
+        Separate genome intervals into groups
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/CreatePHG_step2_addHapsFromFastq/" class="md-nav__link">
+        Align WGS fastq files to reference genome
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/CreatePHG_step2_addHapsFromGVCF/" class="md-nav__link">
+        Filter GVCF and add variants to database
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/CreatePHG_step2_alignAssemblies/" class="md-nav__link">
+        Align assemblies to reference genome
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/CreatePHG_step2_assemblyAnchorWavePluginDetails/" class="md-nav__link">
+        AssemblyMAFFromAnchorWavePlugin Details
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/CreatePHG_step2_assemblyHaplotypeParameters/" class="md-nav__link">
+        Quick Start
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/CreatePHG_step2_assemblyViaAnchorwave/" class="md-nav__link">
+        Quick Start
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/CreatePHG_step2_consensus/" class="md-nav__link">
+        Create consensus haplotypes
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/CreatePHG_step2_haplotypeKeyfile/" class="md-nav__link">
+        CreateHaplotype Key File
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/CreatePHG_step2_taxaGroupTables/" class="md-nav__link">
+        Separate taxa  into different groups
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/ExampleDatabase/" class="md-nav__link">
+        Creating a Simple Example Database
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/FindLikelyParents/" class="md-nav__link">
+        Finding Likely Parents for Imputation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/HaplotypeMethod/" class="md-nav__link">
+        Haplotype Methods
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/ImputePHG_Simple/" class="md-nav__link">
+        I have a fastq file - I want a PHG path
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/ImputeWithPHG_VCF/" class="md-nav__link">
+        Impute variants from a VCF file
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/ImputeWithPHG_compare/" class="md-nav__link">
+        Compare PHG variants to existing variants
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/ImputeWithPHG_exportVCF/" class="md-nav__link">
+        Export variants as VCF
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/ImputeWithPHG_extractPangenome/" class="md-nav__link">
+        Extract a pangenome fasta file
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/ImputeWithPHG_fastq-heterozygous/" class="md-nav__link">
+        Impute variants from any fastq file
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/ImputeWithPHG_fastq-homozygous/" class="md-nav__link">
+        Impute variants from any fastq file - process for homozygous individuals
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/ImputeWithPHG_findPathKeyFiles/" class="md-nav__link">
+        Find Path Key Files
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/ImputeWithPHG_main/" class="md-nav__link">
+        ImputeWithPHG main
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/ImputeWithPHG_paramTuning/" class="md-nav__link">
+        Tune pathfinding parameters
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/MakeDefaultDirectory/" class="md-nav__link">
+        Make Default Directory Plugin
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/MakeInitialPHGDBPipeline/" class="md-nav__link">
+        Make Initial PHG DB Pipeline Plugin
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/MergeFastqPluginDetailedDocs/" class="md-nav__link">
+        MergeFastqPlugin Detailed Documentation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/MultisampleBAMPipeline/" class="md-nav__link">
+        Step 3a: Create ReadMappings using the MultisampleBAM Pipeline
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/PopulatePHGDBPipeline/" class="md-nav__link">
+        Populate PHG DB Pipeline Plugin
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/SampleHaplotypeConfigFile/" class="md-nav__link">
+        Sample Config file for Loading Haplotypes.
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/UpdatePHGSchema/" class="md-nav__link">
+        Update an existing PHG database to latest schema with liquibase
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../UserInstructions/help_biostars/" class="md-nav__link">
+        How to ask questions about the PHG
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  <h1>ParallelAssemblyAnchorsLoad</h1>
+
+<p>The ParallelAssemblyAnchorsLoad.sh script takes 3 parameters:  a configuration file containing database connection information, a keyfile containing specifics on reference and assembly fastas files to be aligned and turned into haplotypes for loading into a PHG database, and an output directory.  </p>
+<p>This script calls the AssemblyHaplotypesMultiThreadPlugin plugin, which takes reference and assembly fastas, split by chromosome, and aligns them with mummer4 scripts.  It performs the same functions as are executed
+when the LoadAssemblyAnchors.sh script is called, but will run the mummer4 alignment programs in parallel.  The number of processes run concurrently is dependent on a user supplied thread count.</p>
+<p>When determining the number of threads to run, please keep in mind the alignment of each ref-assembly
+fasta pair will take RAM commensurate with the size of the genomes.  Consider the RAM limitations
+of your machine as well as the number of cores available.</p>
+<p>The required input to this script is a configuration file with database connection information,
+a keyfile with fasta information and an output directory.  Both the configuration file and the keyfile must live in a local machine directory that is mounted to the docker's /tempFileDir/data directory.</p>
+<p>When ParallelAssemblyAnchorsLoad.sh is called as part of a Docker script, the Docker script expects these mount points:</p>
+<ul>
+<li>Mount localMachine:/pathToDataDir/ to docker:/tempFileDir/data/</li>
+<li>Mount localMachine:/pathToOutputDir/ to docker:/tempFileDir/outputDir/</li>
+</ul>
+<p>The script will create a subdirectory called "align" under the mounted output directory where mummer4 alignment files will be stored.</p>
+<p>Description of required parameters:</p>
+<ul>
+<li>keyfile: The keyfile must be a tab-delimited file with 1 row for each per-chromosome assembly fasta you wish to align and load to the database.  The required columns for the keyfile are RefDir, RefFasta,  AssemblyDir, AssemblyFasta, AssemblyDBName and Chromosome.  The oolumn descriptions are below.<ul>
+<li>RefDir: full path to the directory containing the reference fasta file.</li>
+<li>RefFasta: name of the reference fasta file to be aligned to the assembly fasta file in this row.  This should be a fasta file at the chromosome level.</li>
+<li>AssemblyDir: full path to the directory containing the assembly fasta files.</li>
+<li>AssemblyFasta:  name of the assembly fasta file to be aligned to the reference fasta file in this row.  This should be a fasta file at the chromosome level.</li>
+<li>AssemblyDBName: the name for this assembly to add as the "line_name" to the database's genotype table.</li>
+<li>Chromosome: the chromosome name that is being processed.  This name must match a reference chromosome that was loaded with the LoadGenomeIntervals.sh script.</li>
+</ul>
+</li>
+<li>configFile:  DB Config File containing properties host,user,password,DB and DBtype where DBtype is either "sqlite" or "postgres". This file is expected to live in the folder mounted to Docker tempFileDir/data/. This file may also contain values for optional parameters.</li>
+</ul>
+<p>The optional parameters that may be defined in the configuration file are  mummer4Path, clusterSize, entryPoint, minInversionLen, loadDB, assemblyMethod and numThreads.
+If you wish to set a value other than the default for these parameters, they
+should be included in the configuration file in the format shown below (with your own values replacing the default values shown here):</p>
+<ul>
+<li>AssemblyHaplotypesMultiThreadPlugin.mummer4Path=/mummer/bin</li>
+<li>AssemblyHaplotypesMultiThreadPlugin.clusterSize=250</li>
+<li>AssemblyHaplotypesMultiThreadPlugin.minInversionLen=7500</li>
+<li>AssemblyHaplotypesMultiThreadPlugin.loadDB=true</li>
+<li>AssemblyHaplotypesMultiThreadPlugin.assemblyMethod=mummer4</li>
+<li>AssemblyHaplotypesMultiThreadPlugin.numThreads=3</li>
+<li>AssemblyHaplotypesMultiThreadPlugin.entryPoint=all</li>
+</ul>
+<p>The "entryPoint" parameter is provided for users who wish To speed up processing by running the mummer4 alignments on multiple machines. You may do this, then gather all the mummer files to a single machine.  If you do this, set the loadDB flag to FALSE, run all your alignments, then gather them to a single machine for loading into the database.</p>
+<p>Description of optional parameters:</p>
+<ul>
+<li>mummer4Path: If the mummer4 executables exist in a path other than /mummer/bin, then provide that path via this parameter.  If you are running in the PHG docker, the path will be /mummer/bin and this parameter is not necessary.</li>
+<li>clusterSize:  This is a parameter to mummer4's nucmer alignment program.  It sets the minimum length for a cluster of matches.  We have found the value of 250 provides good coverage with acceptable speed.If you wish a different value, set this parameter.</li>
+<li>minInversionLen: Minimum length of inversion for it to be kept as part of the alignment. Default is 7500</li>
+<li>Boolean: true means load haplotypes to db, false means do not populate the database.  Useful if the user is running mummer4 alignments on multiple machines and plans later to put all mummer4 files on 1 machine to load to a single database.  Defaults to true</li>
+<li>numThreads: Number of threads used to process assembly chromosomes.  The code will subtract 2 from this number to get the number of worker threads.  It leaves 1 thread for IO to the DB and 1 thread for the Operating System.</li>
+<li>entryPoint:  This parameter indicates at which point assembly processing should begin.  If a step other than "all" is chosen, files normally created from the previous steps must be present in a sub-directory named "align" in your output directory.  They must be named using the format shown below for the software to recognize them:<ul>
+<li>all: Run the entire pipeline.  The software creates all necessary files.</li>
+<li>deltafilter:  Assumes the nucmer aligning step has already been performed. Processing starts with mummer4 delta-filter step includes running mummer4 show-coords on both the original alignment and the filtered alignment as well as mummer4 show-snps.  The delta file must be available in a sub-directory named "align" in the directory mounted to docker's /tempFileDir/outputDir/.  The file name must be in the format:<ul>
+<li>ref_<assemblyDBName from config file>_<chromosome from config file>_c<clusterSize>.delta</li>
+<li>ex:  ref_W22_1_c250.delta</li>
+</ul>
+</li>
+<li>refilter: Assumes delta-filter and show-coords for both the delta and the delta-filter steps have been run. This step runs additional filtering to process overlapping alignments, remove embedded alignments and find a longest-path solution.Your output/align directory  must have the files for deltafilter plus:<ul>
+<li>ref_<assemblyDBName from config file>_<chromosome from config file>_c<clusterSize>.delta_filtered</li>
+<li>ref_<assemblyDBName from config file>_<chromosome from config file>_c<clusterSize>.coords_orig</li>
+<li>ref_<assemblyDBName from config file>_<chromosome from config file>_c<clusterSize>.coords_filtered
+haplotypes: This step takes the mummer4 output files and from them creates haplotype sequence fro the database.  If starting from this step, you must have the files from above plus:</li>
+<li>ref_<assemblyDBName from config file>_<chromosome from config file>_c<clusterSize>.coords_filteredPlus_noEmbedded</li>
+<li>ref_<assemblyDBName from config file>_<chromosome from config file>_c<clusterSize>.coords_final</li>
+<li>ref_<assemblyDBName from config file>_<chromosome from config file>_c<clusterSize>.snps_prefiltered</li>
+<li>ref_<assemblyDBName from config file>_<chromosome from config file>_c<clusterSize>.snps_final</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>An example Docker script that would call this shell script is below.  Note: you need to change the mounted user directories to match your own directory configuration.  The docker directories (right side of the count pair beginning with "tempFileDir") need to remain as shown here.  The file names, e.g. "config.txt" should match the names of your files.  And the "config.txt" and "parallelKeyFile_B204.txt" must live in the directory mounted to /tempFileDir/data/.</p>
+<pre><code>echo &quot;Starting taxa B104&quot;
+
+docker1 run --name phg_assembly_container_B104 --rm \
+        -v /workdir/${USER}/phg_assemblyParallel_test/DockerOutput/:/tempFileDir/outputDir/ \
+        -v /workdir/${USER}/phg_assemblyParallel_test/DataFolders/:/tempFileDir/data/ \
+        -v /workdir/${USER}/phg_nam_assemblies/B73/:/tempFileDir/referenceFastas/ \
+        -v /workdir/${USER}/phg_nam_assemblies/B104/:/tempFileDir/assemblyFastas/ \
+        -t phgrepository_test:latest \
+        /ParallelAssemblyAnchorsLoad.sh config.txt \
+                parallelKeyFile_B104.txt
+
+
+echo &quot;Finished taxa 104 &quot;
+
+
+</code></pre>
+<p>An example key file the has information for a single assembly genome is shown below.  Note all fields are tab-delimited and because this is run in a docker, the reference and assembly directories are docker paths.</p>
+<pre><code>RefDir  RefFasta        AssemblyDir     AssemblyFasta   AssemblyDBName  Chromosome
+/tempFileDir/referenceFastas/   B73chr1.fa      /tempFileDir/assemblyFastas/    B104chr1.fa     B104_Assembly   1
+/tempFileDir/referenceFastas/   B73chr2.fa      /tempFileDir/assemblyFastas/    B104chr2.fa     B104_Assembly   2
+/tempFileDir/referenceFastas/   B73chr3.fa      /tempFileDir/assemblyFastas/    B104chr3.fa     B104_Assembly   3
+
+</code></pre>
+<p>An example key file that has per-chromosome pastas for multiple species is shown in the next example.  Note that the assembly chromosome fasta files must exist in the same directory.</p>
+<pre><code>RefDir  RefFasta        AssemblyDir     AssemblyFasta   AssemblyDBName  Chromosome
+/tempFileDir/referenceFastas/   B73chr1.fa      /tempFileDir/assemblyFastas/    B104chr1.fa     B104_Assembly   1
+/tempFileDir/referenceFastas/   B73chr2.fa      /tempFileDir/assemblyFastas/    B104chr2.fa     B104_Assembly   2
+/tempFileDir/referenceFastas/   B73chr3.fa      /tempFileDir/assemblyFastas/    B104chr3.fa     B104_Assembly   3
+/tempFileDir/referenceFastas/   B73chr1.fa      /tempFileDir/assemblyFastas/    B97chr1.fa      B97_Assembly    1
+/tempFileDir/referenceFastas/   B73chr2.fa      /tempFileDir/assemblyFastas/    B97chr2.fa      B97_Assembly    2
+/tempFileDir/referenceFastas/   B73chr3.fa      /tempFileDir/assemblyFastas/    B97chr3.fa      B97_Assembly    3
+</code></pre>
+<p>The ParalleleAssemblyAnchorsLoad.sh script uses the parameter cache option to load the configuration
+file into memory.  This is the -configParameters <configFile> directive given to the tassel run_pipeline.pl script used in the Docker container. if you run this plugin manually at the command line, you will need to include this yourself with a command similar to the one below:</p>
+<pre><code>/tassel-5-standalone/run_pipeline.pl -Xmx100G -debug -configParameters myConfigFile.txt -AssemblyHaplotypesMultiThreadPlugin  -keyFile myKeyFile.txt  -outputDir /workdir/user/phg_assemblies/DockerOutput/ -endPlugin
+</code></pre>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.b4d07000.min.js"></script>
+      
+    
+  </body>
+</html>

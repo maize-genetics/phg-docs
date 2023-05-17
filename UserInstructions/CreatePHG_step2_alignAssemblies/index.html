@@ -1,0 +1,2137 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../CreatePHG_step2_addHapsFromGVCF/">
+      
+      
+        <link rel="next" href="../CreatePHG_step2_assemblyAnchorWavePluginDetails/">
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.13">
+    
+    
+      
+        <title>Align assemblies to reference genome - Practical Haplotype Graph Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.85bb2934.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#align-assemblies-to-reference-genome" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Practical Haplotype Graph Documentation" class="md-header__button md-logo" aria-label="Practical Haplotype Graph Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Practical Haplotype Graph Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Align assemblies to reference genome
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Practical Haplotype Graph Documentation" class="md-nav__button md-logo" aria-label="Practical Haplotype Graph Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Practical Haplotype Graph Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Home_variantTables/" class="md-nav__link">
+        How to use the PHG
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Home_variantsInGVCFFiles/" class="md-nav__link">
+        How to use the PHG
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Home_version1/" class="md-nav__link">
+        Home version1
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../PHG_GUI/" class="md-nav__link">
+        Documentation for Genotyping using the PHG within TASSEL GUI
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+          PHG 
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          PHG 
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../PHG%20/%20BrAPI%20Server%20on%20CBSU/" class="md-nav__link">
+         BrAPI Server on CBSU
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+          Pipeline version1
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_7">
+          <span class="md-nav__icon md-icon"></span>
+          Pipeline version1
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Pipeline_version1/AssemblyHaplotypesPlugin/" class="md-nav__link">
+        AssemblyHaplotypesPlugin
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Pipeline_version1/ConfigFile/" class="md-nav__link">
+        ConfigFile Documentation #
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Pipeline_version1/CreateAssemblyAnchorsPlugin/" class="md-nav__link">
+        CreateAssemblyAnchorsPlugin
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Pipeline_version1/CreateConsensi/" class="md-nav__link">
+        CreateConsensi
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Pipeline_version1/CreateHaplotypeKeyFile/" class="md-nav__link">
+        CreateHaplotype Key File
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Pipeline_version1/CreateHaplotypes/" class="md-nav__link">
+        Create Haplotypes
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Pipeline_version1/CreateHaplotypesFromBAM/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Pipeline_version1/CreateHaplotypesFromFastq/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Pipeline_version1/CreateHaplotypesFromGVCF/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Pipeline_version1/CreateReferenceIntervals/" class="md-nav__link">
+        CreateReferenceIntervals
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Pipeline_version1/ExportPath/" class="md-nav__link">
+        ExportPath
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Pipeline_version1/FastqToHapCountPlugin/" class="md-nav__link">
+        FastqToHapCountPlugin
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Pipeline_version1/FilterGVCFPlugin/" class="md-nav__link">
+        FilterGVCFPlugin
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Pipeline_version1/FindHaplotypeClustersPlugin/" class="md-nav__link">
+        FindHaplotypeClustersPlugin
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Pipeline_version1/FindPath/" class="md-nav__link">
+        FindPath
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Pipeline_version1/FindPathKeyFiles/" class="md-nav__link">
+        Find Path Key Files
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Pipeline_version1/FindPathMinimap2/" class="md-nav__link">
+        Overview #
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Pipeline_version1/HapCountBestPathToTextPlugin/" class="md-nav__link">
+        HapCountBestPathToTextPlugin
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Pipeline_version1/ImportHaplotypePathFilePlugin/" class="md-nav__link">
+        ImportHaplotypePathFilePlugin
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Pipeline_version1/ImportReadMappingToDBPlugin/" class="md-nav__link">
+        ImportReadMappingToDBPlugin
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Pipeline_version1/IndexPangenome/" class="md-nav__link">
+        Overview #
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Pipeline_version1/LoadAssemblyAnchors/" class="md-nav__link">
+        LoadAssemblyAnchors
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Pipeline_version1/LoadConsensusAnchorSequencesPlugin/" class="md-nav__link">
+        LoadConsensusAnchorSequencesPlugin
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Pipeline_version1/LoadGenomeIntervals/" class="md-nav__link">
+        LoadGenomeIntervals
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Pipeline_version1/LoadGenomeIntervalsToDBPlugin/" class="md-nav__link">
+        LoadGenomeIntervalsToDBPlugin
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Pipeline_version1/LoadHapSequencesToDBPlugin/" class="md-nav__link">
+        LoadHapSequencesToDBPlugin
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Pipeline_version1/MergeGVCFPlugin/" class="md-nav__link">
+        MergeGVCFPlugin
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Pipeline_version1/Minimap2NoDocker/" class="md-nav__link">
+        Minimap2NoDocker
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Pipeline_version1/PHG_Liquibase/" class="md-nav__link">
+        PHG Liquibase
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Pipeline_version1/PHG_PostgresDocker/" class="md-nav__link">
+        PHG PostgresDocker
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Pipeline_version1/ParallelAssemblyAnchorsLoad/" class="md-nav__link">
+        ParallelAssemblyAnchorsLoad
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Pipeline_version1/PathsToVCFPlugin/" class="md-nav__link">
+        PathsToVCFPlugin
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Pipeline_version1/RunHapCollapsePlugin/" class="md-nav__link">
+        RunHapCollapsePlugin
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Pipeline_version1/SAMToMappingPlugin/" class="md-nav__link">
+        SAMToMappingPlugin
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Pipeline_version1/help_biostars/" class="md-nav__link">
+        How to ask questions about the PHG
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_36" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7_36" id="__nav_7_36_label" tabindex="0">
+          DeprecatedScripts
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_36_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_7_36">
+          <span class="md-nav__icon md-icon"></span>
+          DeprecatedScripts
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Pipeline_version1/DeprecatedScripts/CreateHaplotypes_sh/" class="md-nav__link">
+        THIS SCRIPT IS DEPRECATED
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" checked>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+          UserInstructions
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="true">
+        <label class="md-nav__title" for="__nav_8">
+          <span class="md-nav__icon md-icon"></span>
+          UserInstructions
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CreatePHG_step0_conda/" class="md-nav__link">
+        Use Conda to run PHG
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CreatePHG_step0_docker/" class="md-nav__link">
+        Use Docker to run PHG
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CreatePHG_step0_main/" class="md-nav__link">
+        CreatePHG step0 main
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CreatePHG_step0_singularity/" class="md-nav__link">
+        Use Singularity to run PHG
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CreatePHG_step1-2_main/" class="md-nav__link">
+        Create and Populate a PHG database with haplotypes
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CreatePHG_step1CreateDB_loadRef/" class="md-nav__link">
+        Create and Populate a PHG database with haplotypes
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CreatePHG_step1_bedfile/" class="md-nav__link">
+        Create bedfile of intervals for PHG reference ranges
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CreatePHG_step1_groupGenomeIntervals/" class="md-nav__link">
+        Separate genome intervals into different groups
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CreatePHG_step1_loadGenomeIntervals/" class="md-nav__link">
+        Load genome intervals to PHG
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CreatePHG_step2AssemblyAndWGSHaplotypes/" class="md-nav__link">
+        Step 2: Add haplotypes to a database
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CreatePHG_step2_FilterGVCFPlugin/" class="md-nav__link">
+        Filter GVCF Plugin
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CreatePHG_step2_FilterGVCFSingleFilePlugin/" class="md-nav__link">
+        FilterGVCFSingleFilePlugin
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CreatePHG_step2_LoadHaplotypesFromGVCFPluginDetails/" class="md-nav__link">
+        LoadHaplotypesFromGVCFPlugin Details
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CreatePHG_step2_MAFToGVCFPluginDetails/" class="md-nav__link">
+        MAFToGVCFPlugin Details
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CreatePHG_step2_addHaplotypesFromWGS/" class="md-nav__link">
+        Quick Start
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CreatePHG_step2_addHapsFromBAM/" class="md-nav__link">
+        Separate genome intervals into groups
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CreatePHG_step2_addHapsFromFastq/" class="md-nav__link">
+        Align WGS fastq files to reference genome
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CreatePHG_step2_addHapsFromGVCF/" class="md-nav__link">
+        Filter GVCF and add variants to database
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Align assemblies to reference genome
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Align assemblies to reference genome
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#instructions" class="md-nav__link">
+    Instructions
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#details" class="md-nav__link">
+    Details
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    Parameters
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#details-on-running-this-step-with-wrapper-scripts" class="md-nav__link">
+    Details on running this step with wrapper scripts
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#details-on-running-this-step-through-docker" class="md-nav__link">
+    Details on running this step through docker
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#files" class="md-nav__link">
+    Files
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#plugins" class="md-nav__link">
+    Plugins
+  </a>
+  
+    <nav class="md-nav" aria-label="Plugins">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#splitfastabychromplugin" class="md-nav__link">
+    SplitFastaByChromPlugin
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#createassemblyanchorsplugin" class="md-nav__link">
+    CreateAssemblyAnchorsPlugin
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#assemblyhaplotypesplugin" class="md-nav__link">
+    AssemblyHaplotypesPlugin
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#assemblyhaplotypesmultithreadplugin-optional" class="md-nav__link">
+    AssemblyHaplotypesMultiThreadPlugin (optional)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#addrefrangeasassemblyplugin-optional" class="md-nav__link">
+    AddRefRangeAsAssemblyPlugin (optional)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    Troubleshooting
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CreatePHG_step2_assemblyAnchorWavePluginDetails/" class="md-nav__link">
+        AssemblyMAFFromAnchorWavePlugin Details
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CreatePHG_step2_assemblyHaplotypeParameters/" class="md-nav__link">
+        Quick Start
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CreatePHG_step2_assemblyViaAnchorwave/" class="md-nav__link">
+        Quick Start
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CreatePHG_step2_consensus/" class="md-nav__link">
+        Create consensus haplotypes
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CreatePHG_step2_haplotypeKeyfile/" class="md-nav__link">
+        CreateHaplotype Key File
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CreatePHG_step2_taxaGroupTables/" class="md-nav__link">
+        Separate taxa  into different groups
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ExampleDatabase/" class="md-nav__link">
+        Creating a Simple Example Database
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FindLikelyParents/" class="md-nav__link">
+        Finding Likely Parents for Imputation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../HaplotypeMethod/" class="md-nav__link">
+        Haplotype Methods
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ImputePHG_Simple/" class="md-nav__link">
+        I have a fastq file - I want a PHG path
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ImputeWithPHG_VCF/" class="md-nav__link">
+        Impute variants from a VCF file
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ImputeWithPHG_compare/" class="md-nav__link">
+        Compare PHG variants to existing variants
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ImputeWithPHG_exportVCF/" class="md-nav__link">
+        Export variants as VCF
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ImputeWithPHG_extractPangenome/" class="md-nav__link">
+        Extract a pangenome fasta file
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ImputeWithPHG_fastq-heterozygous/" class="md-nav__link">
+        Impute variants from any fastq file
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ImputeWithPHG_fastq-homozygous/" class="md-nav__link">
+        Impute variants from any fastq file - process for homozygous individuals
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ImputeWithPHG_findPathKeyFiles/" class="md-nav__link">
+        Find Path Key Files
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ImputeWithPHG_main/" class="md-nav__link">
+        ImputeWithPHG main
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ImputeWithPHG_paramTuning/" class="md-nav__link">
+        Tune pathfinding parameters
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MakeDefaultDirectory/" class="md-nav__link">
+        Make Default Directory Plugin
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MakeInitialPHGDBPipeline/" class="md-nav__link">
+        Make Initial PHG DB Pipeline Plugin
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MergeFastqPluginDetailedDocs/" class="md-nav__link">
+        MergeFastqPlugin Detailed Documentation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MultisampleBAMPipeline/" class="md-nav__link">
+        Step 3a: Create ReadMappings using the MultisampleBAM Pipeline
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../PopulatePHGDBPipeline/" class="md-nav__link">
+        Populate PHG DB Pipeline Plugin
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SampleHaplotypeConfigFile/" class="md-nav__link">
+        Sample Config file for Loading Haplotypes.
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../UpdatePHGSchema/" class="md-nav__link">
+        Update an existing PHG database to latest schema with liquibase
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../help_biostars/" class="md-nav__link">
+        How to ask questions about the PHG
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#instructions" class="md-nav__link">
+    Instructions
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#details" class="md-nav__link">
+    Details
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    Parameters
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#details-on-running-this-step-with-wrapper-scripts" class="md-nav__link">
+    Details on running this step with wrapper scripts
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#details-on-running-this-step-through-docker" class="md-nav__link">
+    Details on running this step through docker
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#files" class="md-nav__link">
+    Files
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#plugins" class="md-nav__link">
+    Plugins
+  </a>
+  
+    <nav class="md-nav" aria-label="Plugins">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#splitfastabychromplugin" class="md-nav__link">
+    SplitFastaByChromPlugin
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#createassemblyanchorsplugin" class="md-nav__link">
+    CreateAssemblyAnchorsPlugin
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#assemblyhaplotypesplugin" class="md-nav__link">
+    AssemblyHaplotypesPlugin
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#assemblyhaplotypesmultithreadplugin-optional" class="md-nav__link">
+    AssemblyHaplotypesMultiThreadPlugin (optional)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#addrefrangeasassemblyplugin-optional" class="md-nav__link">
+    AddRefRangeAsAssemblyPlugin (optional)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    Troubleshooting
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="align-assemblies-to-reference-genome">Align assemblies to reference genome</h1>
+<h2 id="instructions">Instructions</h2>
+<h2 id="details">Details</h2>
+<p>The load assembly step uses mummer4 scripts to align a reference fasta file to the assembly fasta file. This is done on a chromosome-by-chromosome basis, and the <em>Quick Start</em> pipeline automatically splits the reference fasta into single chromosomes for the alignment. The fasta ID line for these files should contain the chromosome name with a space between the chromosome name and any additional information on the ID line and chromosome names between the reference and assembly genomes must be consistent.</p>
+<p>The pipeline runs mummer4 nucmer, delta-filter, show-coords, and show-snps scripts and then processeses and reformats data for the PHG. </p>
+<h2 id="parameters">Parameters</h2>
+<p>Required parameters:</p>
+<ul>
+<li>configFile: DB Config File containing properties host,user,password,DB and DBtype where DBtype is either "sqlite" or "postgres". This file is expected to live in the folder mounted to Docker tempFileDir/data/.</li>
+<li>referenceFasta: The reference fasta file. This file is used when running Mummer4 alignment scripts. If running this step on the command line, this parameter is set in the config file directly. If running through the docker, this file is expected to live in the folder mounted to Docker /tempFileDir/data/reference. The SplitFastaByChromPlugin automatically separates the reference and assembly fastas into chromosomes, so the user does not need to do that.</li>
+<li>assemblyFastaDir: The directory containing all assembly fasta files to be added to the database. The SpliteFastaByChromPlugin automatically separates the reference and assembly fastas into chromosomes, so the user does not need to do that. The individual chromosome files are used to align against the respective reference chromosome when the mummer4 scripts are run. If running this step on the command line, this parameter is set in the config file. If running through the coker, this file is expected to be in the folder mounted to Docker path /tempFileDir/data/assemblyFasta.</li>
+<li>assemblyName: name to append to the output files that identifies the assembly processed. This is also the name that will be stored in the database genotypes table. To differentiate the assembly from other instances of taxa with this name, you may want to name it <taxa>_Assembly. There cannot be duplicate assembly names in the database.</li>
+<li>chromList: A list of chromosome names that will be processed. This must match the chromosome names as stored on the ID line in the fasta file, or can be just the chromosome number if the chromosome is listed as "chr1" or "chromosome1". Chromosome names must match between the assembly and reference genomes. Note if leading 0's are added to the chromosome name, they must be consistently added in both assembly fasta, reference fasta, and this shell parameter.</li>
+<li>clusterSize: The minimum length for a cluster of matches used when running mummer4 nucmer program. Nucmer default is 65 but we have found when running maize assemblies 250 is faster and provides good results. That is the default we show below.</li>
+<li>assemblyQuality: Either 0 or 1 indicating assembly quality. If working with an assembly that has been scaffolded into chromosomes that approximately match chromsomes in the reference genome, set this parameter as 1. If working with an assembly that has been scaffolded but not built to chromosome-level, set this parameter to 0. There are two pipelines for adding assembly data to the PHG. The 1 flag for this parameter runs the highQualityAssemblyPlugin pipeline, while the 0 flag for this parameter runs the lowQualityAssemblyPlugin pipeline. </li>
+<li>addAssemblyMethod: Either "parallel" or "sequential". When there are multiple assemblies to add to the database, the PHG code can add them one by one or in parallel. The outcome is identical regardless of which step is used, but memory usage and timings will differ.</li>
+<li>keyfile: The keyfile must be a tab-delimited file with 1 row for each per-chromosome assembly fasta you wish to align and load to the database. The required columns for the keyfile are RefDir, RefFasta AssemblyDir, AssemblyFasta, AssemblyDBName and Chromosome. Example assembly keyfiles for a single <a href="../../Files/assemblies_keyfile1.txt">taxon</a> or for <a href="../../Files/assemblies_keyfile2.txt">multiple taxa</a>. The column descriptions are below.<ul>
+<li>RefDir: full path to the directory containing the reference fasta file.</li>
+<li>RefFasta: name of the reference fasta file to be aligned to the assembly fasta file in this row. This should be a fasta file at the chromosome level.</li>
+<li>AssemblyDir: full path to the directory containing the assembly fasta files.</li>
+<li>AssemblyFasta: name of the assembly fasta file to be aligned to the reference fasta file in this row. This should be a fasta file at the chromosome level.</li>
+<li>AssemblyDBName: the name for this assembly to add as the "line_name" to the database's genotype table.</li>
+<li>Chromosome: the chromosome name that is being processed. This name must match a reference chromosome that was loaded with the LoadGenomeIntervals.sh script.</li>
+</ul>
+</li>
+</ul>
+<p>Optional parameters:</p>
+<ul>
+<li>mummer4Path: If the mummer4 executables exist in a path other than /mummer/bin, then provide that path via this parameter. If you are running in the PHG docker, the path will be /mummer/bin and this parameter is not necessary.</li>
+<li>clusterSize: This is a parameter to mummer4's nucmer alignment program. It sets the minimum length for a cluster of matches. We have found the value of 250 provides good coverage with acceptable speed.If you wish a different value, set this parameter.</li>
+<li>minInversionLen: Minimum length of inversion for it to be kept as part of the alignment. Default is 7500</li>
+<li>Boolean: true means load haplotypes to db, false means do not populate the database. Useful if the user is running mummer4 alignments on multiple machines and plans later to put all mummer4 files on 1 machine to load to a single database. Defaults to true</li>
+<li>numThreads: Number of threads used to process assembly chromosomes. The code will subtract 2 from this number to get the number of worker threads. It leaves 1 thread for IO to the DB and 1 thread for the Operating System.</li>
+<li>entryPoint: The "entryPoint" parameter is provided for users who wish to speed up processing by running the mummer4 alignments on multiple machines. You may do this, then gather all the mummer files to a single machine. If you do this, set the loadDB flag to FALSE, run all your alignments, then gather them to a single machine for loading into the database. This parameter indicates at which point assembly processing should begin. If a step other than "all" is chosen, files normally created from the previous steps must be present in a sub-directory named "align" in your output directory. They must be named using the format shown below for the software to recognize them:<ul>
+<li>all: Run the entire pipeline.  The software creates all necessary files.</li>
+<li>deltafilter:  Assumes the nucmer aligning step has already been performed. Processing starts with mummer4 delta-filter step includes running mummer4 show-coords on both the original alignment and the filtered alignment as well as mummer4 show-snps.  The delta file must be available in a sub-directory named "align" in the directory mounted to docker's /tempFileDir/outputDir/.  The file name must be in the format:<ul>
+<li>ref_<assemblyDBName from config file>_<chromosome from config file>_c<clusterSize>.delta</li>
+<li>ex:  ref_W22_1_c250.delta</li>
+</ul>
+</li>
+<li>refilter: Assumes delta-filter and show-coords for both the delta and the delta-filter steps have been run. This step runs additional filtering to process overlapping alignments, remove embedded alignments and find a longest-path solution.Your output/align directory  must have the files for deltafilter plus:<ul>
+<li>ref_<assemblyDBName from config file>_<chromosome from config file>_c<clusterSize>.delta_filtered</li>
+<li>ref_<assemblyDBName from config file>_<chromosome from config file>_c<clusterSize>.coords_orig</li>
+<li>ref_<assemblyDBName from config file>_<chromosome from config file>_c<clusterSize>.coords_filtered
+haplotypes: This step takes the mummer4 output files and from them creates haplotype sequence fro the database.  If starting from this step, you must have the files from above plus:</li>
+<li>ref_<assemblyDBName from config file>_<chromosome from config file>_c<clusterSize>.coords_filteredPlus_noEmbedded</li>
+<li>ref_<assemblyDBName from config file>_<chromosome from config file>_c<clusterSize>.coords_final</li>
+<li>ref_<assemblyDBName from config file>_<chromosome from config file>_c<clusterSize>.snps_prefiltered</li>
+<li>ref_<assemblyDBName from config file>_<chromosome from config file>_c<clusterSize>.snps_final</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="details-on-running-this-step-with-wrapper-scripts"><em>Details on running this step with wrapper scripts</em></h3>
+<p>When running this step on the command line, all file paths and parameters are set in the config file. The only call that needs to be run in the terminal is <code>phg loadAssembly /path/to/config.txt</code>. If you would like to overwrite the parameters set in the config file, you can do that by setting the parameters on the command line directly.</p>
+<p>For example, to ignore the config file assembly name and set one directly, you could run:</p>
+<pre><code>phg loadAssembly -configFile /path/to/config.txt -assemblyName newAssembly1
+</code></pre>
+<h3 id="details-on-running-this-step-through-docker"><em>Details on running this step through docker</em></h3>
+<p>When LoadAssemblyAnchors is called as part of a Docker script, the Docker script expects these mount points:</p>
+<ul>
+<li>Mount localMachine:/pathToAssemblyFastas/ to docker:/tempFileDir/data/assemblyFasta</li>
+<li>Mount localMachine:/pathToDataDir/ to docker:/tempFileDir/data/</li>
+<li>Mount localMachine:/pathToOutputDir/ to docker:/tempFileDir/outputDir/</li>
+<li>Mount localMachine:/pathToReferenceFastaDir/ to docker:/tempFileDir/data/reference</li>
+</ul>
+<p>Note the script will create a subdirectory named "align" under the /tempFileDir/outputDir/ directory. This is where the mummer4 programs output will be written.</p>
+<p>All output from running this script will be written to files in the directory mounted to Docker /tempFileDir/outputDir/align.</p>
+<p>An example Docker script that would call this shell script is below.  Note: you need to change the mounted user directories to match your own directory configuration.  The docker directories (right side of the count pair beginning with "tempFileDir" need to remain as shown here.  The file names, e.g. "config.txt" should match the names of your files.</p>
+<p>This example runs through all 10 chromosomes for a particular assembly.  In this example, the assembly files are broken into fasta files name ph207chr1.fasta, ph297chr2.fasta, etc.  The reference fastas are broken by chromosome and are named b73chr1.fasta, b73chr2.fasta, etc.  You need to change those names to match your fasta file names.</p>
+<pre><code>#!python
+
+#!/bin/bash
+chromosomeList=${chromList}
+
+for chrom in &quot;${chromosomeList[@]}&quot;
+do
+
+echo &quot;Starting chrom ${chrom} &quot;
+
+docker run --name phg_assembly_container_chr${chrom} --rm \
+        -v /workdir/user/mummer4_testing/output:/tempFileDir/outputDir/ \
+        -v /workdir/user/mummer4_testing/data:/tempFileDir/data/ \
+        -v /workdir/user/mummer4_testing/refFastas/:/tempFileDir/data/reference/ \
+        -v /workdir/user/mummer4_testing/assemblyFastas/:/tempFileDir/data/assemblyFasta/ \
+        -v /workdir/user/mummer4_testing/mummer_from_shellDocker/:/tempFileDir/outputDir/align/ \
+        -t maizegenetics/phg:latest \
+        /LoadAssemblyAnchors.sh configSQLite_docker.txt \
+                b73chr${chrom}.fasta \
+                ph207chr${chrom}.fasta \
+                PH207_Assembly \
+                ${chrom} \
+                250
+
+
+echo &quot;Finished chrom  ${chrom} &quot;
+done
+</code></pre>
+<p>ParallelAssemblyAnchorsLoad runs similarly to LoadAssemblyAnchors. When ParallelAssemblyAnchorsLoad is called as part of a Docker script, the Docker script expects these mount points:</p>
+<ul>
+<li>Mount localMachine:/pathToDataDir/ to docker:/tempFileDir/data/</li>
+<li>Mount localMachine:/pathToOutputDir/ to docker:/tempFileDir/outputDir/</li>
+</ul>
+<p>The script will create a subdirectory called "align" under the mounted output directory where mummer4 alignment files will be stored.</p>
+<p>An example Docker script that would call this shell script is below.  Note: you need to change the mounted user directories to match your own directory configuration. The docker directories (right side of the count pair beginning with "tempFileDir") need to remain as shown here. The file names, e.g. "config.txt" should match the names of your files. And the "config.txt" and "parallelKeyFile_B204.txt" must live in the directory mounted to /tempFileDir/data/.</p>
+<pre><code>echo &quot;Starting taxa B104&quot;
+
+docker1 run --name phg_assembly_container_B104 --rm \
+        -v /workdir/${USER}/phg_assemblyParallel_test/DockerOutput/:/tempFileDir/outputDir/ \
+        -v /workdir/${USER}/phg_assemblyParallel_test/DataFolders/:/tempFileDir/data/ \
+        -v /workdir/${USER}/phg_nam_assemblies/B73/:/tempFileDir/referenceFastas/ \
+        -v /workdir/${USER}/phg_nam_assemblies/B104/:/tempFileDir/assemblyFastas/ \
+        -t phgrepository_test:latest \
+        /ParallelAssemblyAnchorsLoad.sh config.txt \
+                parallelKeyFile_B104.txt
+
+
+echo &quot;Finished taxa 104 &quot;
+</code></pre>
+<p>Note: use docker1 if running on cbsu.</p>
+<p>The --name parameter provides a name for the container.  This is optional.</p>
+<p>The --rm parameter indicates the container should be deleted when the program finishes executing.  This is optional.</p>
+<p>The -v directives are used to mount data from the user machine into the Docker.  The path preceding the ":" is the path on the user machine.  The directory path following the ":" are the paths inside the Docker where the user home directories will be mounted.</p>
+<p>The -t directive indicates the Docker image of which this container will be an instance.  The last line tells the Docker container to run the LoadAssemblyAnchors.sh script which is found in the root directory.  The items following are the parameters to the LoadAssemblyAnchors.sh script.</p>
+<h3 id="files"><em>Files</em></h3>
+<p><strong>Config file</strong></p>
+<p>An example can be found here: <a href="../Files/master_config.txt">Master config file</a></p>
+<p><strong>Reference Fasta file</strong></p>
+<p>Fasta file for the reference genome you want to use in the database</p>
+<p><strong>Assembly Fasta file(s)</strong></p>
+<p>Fasta files with genome assemblies you want to add to the PHG. These are read from the directory passed in the assemblyFastaDir parameter.</p>
+<p><strong>Mummer4 output files</strong></p>
+<p>Mummer3 output files are written to a directory called "align" in the output directory specified by the user. The output directory should be mounted to the Docker /tempFileDir/outputDir/align directory.</p>
+<p><strong>Assembly key file</strong></p>
+<p>The assembly key file must be a tab-delimited file with 1 row for each per-chromosome assembly fasta you wish to align and load to the database. The required columns for the keyfile are RefDir, RefFasta AssemblyDir, AssemblyFasta, AssemblyDBName and Chromosome. An example assembly keyfile for a single genome assembly can be found <a href="../Files/assembly_keyfile1.txt">here</a>. Note all fields are tab-delimited and because this is run in a docker, the reference and assembly directories are docker paths.</p>
+<p>An example key file that has per-chromosome pastas for multiple species is shown <a href="../Files/assembly_keyfile2.txt">here</a>. Note that the assembly chromosome fasta files must exist in the same directory.</p>
+<h3 id="plugins"><em>Plugins</em></h3>
+<p>This step calls multiple plugins to add assemblies to the PHG. The plugins are called in the order SplitFastaByChromPlugin --&gt; CreateAssemblyAnchorsPlugin --&gt; AssemblyHaplotypesPlugin/AssemblyHaplotypesMultiThreadPlugin. AddRefRangeAssemblyPlugin is an optional step.</p>
+<p><img alt="AddAssembliesToDBPlugins.png" src="../../images/AddAssembliesToDBPlugins.png" /></p>
+<p>The assembly entries in the genotypes table will be defaulted to the following values:</p>
+<ul>
+<li>line_name:  the assembly name</li>
+<li>line_data: the mummer script parameters used with this version of PHG</li>
+<li>Ploidy:  1</li>
+<li>is_reference:  false</li>
+<li>isPhasedAcrossGenes: true</li>
+<li>isPhasesAcrossChromosomes: true</li>
+</ul>
+<p>The assembly entries in the gametes table will be defaulted to the following values:</p>
+<ul>
+<li>hapNumber: 0</li>
+<li>Confidence:  1</li>
+</ul>
+<p>The assembly entries in the methods table will be defaulted to the following values:</p>
+<ul>
+<li>method_type: DBLoadingUtils.MethodTYpe.ASSEMBLY_HAPLOTYPES</li>
+<li>name:  mummer4</li>
+<li>description:  the mummer script parameters used with this version of PHG ( same as genotypes:line_data</li>
+</ul>
+<h4 id="splitfastabychromplugin"><strong>SplitFastaByChromPlugin</strong></h4>
+<p>This plugin splits fasta by chromosome. It assumes the id line has a chromosome of the form &gt;1, &gt;chr1 or &gt;chromosome1. All of the above forms (case insensitive) will be written with an id line of just the number, e.g. &gt;1 or &gt;2.</p>
+<p>The "name" parameter is used as the basis of the name.  To this name will be appended the "chr" and chrom number and .fa. For example:  If the user gives "w22" as the name, the code will write files: w22chr1.fa, w22chr2.fa, etc.</p>
+<p>The isGca parameter: The assemblies starting with GCA have long text in the idLIne, with the chromosome stuck in the middle. This plugin will correctly parse these lines. Other weird id lines are not supported and may need to be corrected manually before running through this plugin.</p>
+<p>Seems each set of assemblies that arrives has a different signature for the idline. So I keep customizing. Consider this code to the "base" plugin.  On each run, if the idlines don't adhere to chr/chromosome/X or GCA, then user should run an altered version of this, or fix the idlines first.</p>
+<p>The parameters to this plugin are:</p>
+<ul>
+<li>-fasta <Fasta File> Fasta File to split by chromosome. (REQUIRED)</li>
+<li>-name <Name> Name to give each file, e.g w22.  To this name will be appended 'chr' plus the chrom number plus .fa (REQUIRED)</li>
+<li>-outputDir <Output Directory> ath to write the split files (REQUIRED)</li>
+<li>-isGca <Is GCA> GCA fastas have long text as idLines.  These fasta will have their id lines specially parsed to extract the chromosome number.</li>
+</ul>
+<h4 id="createassemblyanchorsplugin"><strong>CreateAssemblyAnchorsPlugin</strong></h4>
+<p>This plugin takes an assembly genome fasta file, splits the sequence into contigs based on the presence of N's. Each contig begins at a defined allele (base of A,C,G or T) and ends when an N is encountered. N's are skipped, a new contig begins at the next non-N allele. The contig fasta is aligned against the reference genome using minimap2. Samtools mpileup command is used to generate a pileup of read bases aligning to the reference, limiting the pileup to the conserved region intervals. Bcftools are then used to create a gvcf file. Fastas created from the gvcf are loaded to the db via the LoadHapSequencesToDBPlugin.</p>
+<p>Assembly inter-anchor regions are not identified at this time.</p>
+<p>Tables populated via this method are:</p>
+<ul>
+<li>genotypes</li>
+<li>gametes</li>
+<li>gamete_groups</li>
+<li>methods</li>
+<li>haplotypes</li>
+<li>gamete_haplotypes</li>
+</ul>
+<p>The parameters to this plugin are:</p>
+<ul>
+<li>-ref <Reference Genome File>  Reference Genome File for aligning against. (Default is null) (REQUIRED)</li>
+<li>-genomeFile <Assembly Genome> Path to assembly genome fasta from which to pull sequence for aligning.</li>
+<li>-genomeData <Genome Data File> A tab-delimited file containing genome specific data with columns: Genotype Hapnumber Dataline Ploidy Reference GenePhased ChromPhased Confidence Method MethodDetails RefVersion.  </li>
+<li>-outputDir <Output directory>  Path to output directory including trailing / that will be used when creating temporary output files.</li>
+<li>-intervals <Intervals File> Path to BED formatted file containing the intervals used when creating the reference genome intervals. The positions are 0-based, inclusive/exclusive. This is used in mpileup. (Default is null) (REQUIRED)</li>
+<li>-configFile <DB Config File> Path to config file containing DB parameters host, user, password, DB, type.  Used for making the database connection.  Type must be either "sqlite" or "postgres" to identify db type for connection.</li>
+</ul>
+<p>The genome data file contents are described below:</p>
+<ul>
+<li>Genotype:  the nmae of the line as you want it to appear in the db genotypes table "name" column, e.g. "B104" or "B104_haplotype_caller"</li>
+<li>Hapnumber:  The 0-based chromosome number.  For inbreds, this is always 0.</li>
+<li>Dataline: Text description defining the line. This data will be stored in the "description" field of the genotypes table.</li>
+<li>Ploidy:  Number of chromosomes for this genome, the value to be stored in the "ploidy" field of the genome_intervals table.  Should be 1 for the reference.</li>
+<li>Reference:  a boolean field indicating if this genome is the reference (should be true for this plugin)</li>
+<li>GenePhased: a boolean field indicating if the genes are phased.  Should be false for the reference.</li>
+<li>ChromPhased:  a boolean field indicating if the chromosomes are phased.  Should be false for the reference.</li>
+<li>Confidence:  a float field indicating confidence in phasing.  Generally 1 when no phasing.</li>
+<li>Method:  a mathod name by which this version of the reference data can be identified.</li>
+<li>MethodDetails:  Text description defining the method used to create the reference (or indicating the AGP version)</li>
+<li>RefVersion: a version name used to identify the version of this reference data.</li>
+</ul>
+<h4 id="assemblyhaplotypesplugin"><strong>AssemblyHaplotypesPlugin</strong></h4>
+<p>This plugin takes a reference fasta file containing sequence for a single chromosome and an assembly fasta file with sequence for a single corresponding chromosome. The fastas are aligned using mummer4 nucmer script with a cluster size of 250 and the --mum parameter (anchor matches are unique in both reference and query).  </p>
+<p>The nucmer results are filtered using mummer4 delta-filter script with the -g option. The -g option provides a 1-1 global alignment not allowing rearrangments. Mummer script show-coords is run on both the original delta file created by nucmer, and the filtered delta created via delta-filter. Post-processing is done to add back inversions.</p>
+<p>Mummer script show-snps is run using the post-processed coords file. The list of final-snps is stored in htsjdk VariantContext records. The haplotype sequence is pulled from the VariantContext records. For alignments that map to reference anchor regions, haplotype sequence and variant lists are created and loaded to the PHG database.</p>
+<p>Both assembly anchor and inter-anchor regions are processed in this method.</p>
+<p>Tables populated via this method are:</p>
+<ul>
+<li>genotypes</li>
+<li>gametes</li>
+<li>gamete_groups</li>
+<li>methods</li>
+<li>haplotypes</li>
+<li>gamete_haplotypes</li>
+</ul>
+<p>The parameters to this plugin are:</p>
+<ul>
+<li>-ref <Reference Fasta File>  Reference Genome File for a single chromosome.  (Default is null) (REQUIRED)</li>
+<li>-assembly <Assembly Fasta File> Path to assembly fasta for a single chromosome from which to pull sequence for aligning.</li>
+<li>-outputDir <Output directory>  Path to output directory including trailing / that will be used when creating temporary output files.</li>
+<li>-dbConfigFile <DB Config File> Path to config file containing DB parameters host, user, password, DB, type.  Used for making the database connection.  Type must be wither "sqlite" or "postgres" to identify db type for connection.</li>
+<li>-version <version> Version name for the set of DB anchor/inter-anchor coorcinates as stored in the anchor_versions table (Default is null) (REQUIRED)</li>
+<li>-assemblyName <Assembly Name> Name of assembly taxon, to be stored as taxon name in the DB. (Default is null) (REQUIRED)</li>
+<li>-chrom <Chromosome Name> Name of chromosome as it appears both for the reference in the db genome_intervals table and in the fasta file idline for the assembly.  The chromosome name can be just a number, a number preceded by "chr" or a number preceded by "chromsome".  Reference and assembly need to be consistent.</li>
+</ul>
+<h4 id="assemblyhaplotypesmultithreadplugin-optional"><strong>AssemblyHaplotypesMultiThreadPlugin</strong> (optional)</h4>
+<p>The AssemblyHaplotypesMultiThreadPlugin plugin takes reference and assembly fastas, split by chromosome, and aligns them with mummer4 scripts. It performs the same functions as are executed when the LoadAssemblyAnchors.sh script is called, but will run the mummer4 alignment programs in parallel. The number of processes run concurrently is dependent on a user supplied thread count.</p>
+<p>When determining the number of threads to run, please keep in mind the alignment of each ref-assembly fasta pair will take RAM commensurate with the size of the genomes. Consider the RAM limitations of your machine as well as the number of cores available.</p>
+<p>The required input to this script is a configuration file with database connection information, a keyfile with fasta information and an output directory.  Both the configuration file and the keyfile must live in a local machine directory that is mounted to the docker's /tempFileDir/data directory if this is run via docker.</p>
+<p>The ParalleleAssemblyAnchorsLoad.sh script uses the parameter cache option to load the configuration file into memory.  This is the -configParameters <configFile> directive given to the tassel run_pipeline.pl script used in the Docker container. if you run this plugin manually at the command line, you will need to include this yourself with a command similar to the one below:</p>
+<pre><code>/tassel-5-standalone/run_pipeline.pl -Xmx100G -debug \
+-configParameters myConfigFile.txt \
+-AssemblyHaplotypesMultiThreadPlugin  
+    -keyFile myKeyFile.txt  \
+    -outputDir /workdir/user/phg_assemblies/DockerOutput/ \
+    -endPlugin
+</code></pre>
+<h4 id="addrefrangeasassemblyplugin-optional"><strong>AddRefRangeAsAssemblyPlugin</strong> (optional)</h4>
+<p>This class was created to load a reference genome as an assembly.  The method is hard-coded to "mummer4", which is the assembly method name at the time of this writing. All the variants are reference records. The addition of these haplotypes allows for pulling </p>
+<ul>
+<li>-ref <Reference Genome File>  Reference Genome File for aligning against. (REQUIRED)</li>
+<li>-configFile <Genome Data File> Path to config file for accessing/loading the DB (REQUIRED)</li>
+<li>-methodName <Method Name> Name of method used for processing. Should match the assembly or GATK method based on how user wants the ref haplotypes grouped (REQUIRED)</li>
+</ul>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<ol>
+<li>If running through Docker, check that mount points are correct.</li>
+<li>Check that chromosome names match between reference and assembly genomes.</li>
+</ol>
+<p><a href="../CreatePHG_step1-2_main/">Return to Step 2 pipeline</a></p>
+<p><a href="../Home.md">Return to Wiki Home</a></p>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.b4d07000.min.js"></script>
+      
+    
+  </body>
+</html>
