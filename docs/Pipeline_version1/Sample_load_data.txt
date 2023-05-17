@@ -1,0 +1,2 @@
+Genotype	Hapnumber	Dataline	ploidy	genesPhased	chromsPhased	confidence	Method	MethodDetails
+B73Ref	0	B73 from agpv4	1	false	false	1	method2_ref	Anchors from v4 gff gene coordinates.
