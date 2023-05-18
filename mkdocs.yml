@@ -1,3 +1,34 @@
 site_name: Practical Haplotype Graph Documentation
 theme:
   name: material
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - search.suggest
+    - search.highlight
+    - search.share
+plugins:
+  - search:
+      lang: en
+nav:
+  - Home:
+    - Introduction: 'index.md'
+    - 'Buckler Lab Website': 'https://maizegenetics.net'
+  - 'Getting Started':
+    - 'Overview': 'Home_variantsInGVCFFiles.md'
+    - 'Step 1: Create Initial PHG with Reference Data': 'UserInstructions/CreatePHG_step1CreateDB_loadRef.md'
+    - 'Step 2: Add Haplotypes': 'UserInstructions/CreatePHG_step2AssemblyAndWGSHaplotypes.md'
+    - 'Step 3: Impute Variants or Haplotypes': 'UserInstructions/ImputeWithPHG_main.md'
+  - 'FAQ':
+    - 'Extract a Pangenome FASTA': 'UserInstructions/ImputeWithPHG_extractPangenome.md'
+    - 'Find Likely Parents for Imputation': 'UserInstructions/FindLikelyParents.md'
+    - 'PHG Path from a FASTQ': 'UserInstructions/ImputePHG_Simple.md'
+    - 'Impute Variants from a VCF': 'UserInstructions/ImputeWithPHG_VCF.md'
+    - 'Impute Variants from a FASTQ': 'UserInstructions/ImputeWithPHG_fastq-heterozygous.md'
+    - 'Impute Variants from a FASTQ (Homozygous)': 'UserInstructions/ImputeWithPHG_fastq-homozygous.md'
+    - 'Update Existing PHG Database to Latest Schema': 'UserInstructions/UpdatePHGSchema.md'
+  - 'API Reference': 'https://javadoc.io/doc/net.maizegenetics/phg/latest/index.html'
+  - 'Where to Ask Questions':
+    - Biostars: 'getting-help.md'

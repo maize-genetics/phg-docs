@@ -1,4 +1,4 @@
-![PHG user flowchart - Pathing.png](https://bitbucket.org/repo/nk4MoBK/images/454519690-PHG%20user%20flowchart%20-%20Pathing.png)
+![PHG user flowchart - Pathing.png](/images/ImputeFlowchart.png)
 
 # Step 3: Impute variants with the PHG
 
